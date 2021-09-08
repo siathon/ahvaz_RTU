@@ -157,7 +157,7 @@ string phone_no_2 = "";
 string gps_phone  = "30004505003188";
 string gprs_url = "";
 string device_id = "000000";
-double firmware_version = 4.5;
+double firmware_version = 4.6;
 double temp_firmware_version;
 bool created_file = false;
 
@@ -824,7 +824,7 @@ void get_time(){
         sim800.AT_HTTPINIT(EXEC_CMND);
         sim800.AT_HTTPPARA(WRITE_CMND, "CID", "1");
         char temp[60];
-        sprintf(temp, "http://gw.abfascada.ir/ahv_rtu/settings.php?co=%s", device_id.c_str());
+        sprintf(temp, "http://172.100.5.36:8088/ahv_rtu/settings.php?co=%s", device_id.c_str());
         sim800.AT_HTTPPARA(WRITE_CMND, "URL", temp);
         wait_us(100000);
         result = sim800.AT_SAPBR(WRITE_CMND, 1, 1);
@@ -1846,7 +1846,7 @@ int check_version(){
         sim800.AT_HTTPINIT(EXEC_CMND);
         sim800.AT_HTTPPARA(WRITE_CMND, "CID", "1");
         // sim800.AT_HTTPPARA(WRITE_CMND, "USERDATA", "\"Cache-Control\": \"no-cache\"");
-        sim800.AT_HTTPPARA(WRITE_CMND, "URL", "fw.abfascada.ir/ahv_rtu/version.php");
+        sim800.AT_HTTPPARA(WRITE_CMND, "URL", "172.100.5.36:8088/ahv_rtu/version.php");
         wait_us(500000);
         Watchdog::get_instance().kick();
 		result = sim800.AT_SAPBR(WRITE_CMND, 1, 1);
@@ -1935,7 +1935,7 @@ int download_update_file(){
         sim800.AT_HTTPPARA(WRITE_CMND, "CID", "1");
         // sim800.AT_HTTPPARA(WRITE_CMND, "USERDATA", "\"Cache-Control\": \"no-cache\"");
         char url[100];
-        sprintf(url, "fw.abfascada.ir/ahv_rtu/update_%.1f.bin", temp_firmware_version);
+        sprintf(url, "172.100.5.36:8088/ahv_rtu/update_%.1f.bin", temp_firmware_version);
         sim800.AT_HTTPPARA(WRITE_CMND, "URL", string(url));
         wait_us(500000);
         Watchdog::get_instance().kick();
